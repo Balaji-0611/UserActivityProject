@@ -28,8 +28,21 @@ def index(request):
     for activity in activityList:
         timePeriodDict = {}
         # Format timestamp using strftime
-        timePeriodDict["start_time"] = activity.startTime.strftime("%b %d %Y   %H:%M%p")
-        timePeriodDict["end_time"] = activity.endTime.strftime("%b %d %Y   %H:%M%p")
+        try:
+            startTime = activity.startTime.strftime("%b %d %Y   %H:%M%p")
+        except:
+            print("Invalid Datetime format.")
+            startTime = None
+
+        timePeriodDict["start_time"] = startTime
+
+        try:
+            endTime = activity.endTime.strftime("%b %d %Y   %H:%M%p")
+        except:
+            print("Invalid Datetime format.")
+            endTime = None
+        timePeriodDict["end_time"] = endTime
+
         activityDict[activity.user.userId]["activity_periods"].append(timePeriodDict)
 
 
